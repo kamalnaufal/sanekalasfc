@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poster Gratis Latihan - Sanekala Fighting Camp</title>
+    <!-- Tailwind CSS untuk Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display untuk kesan elegan & Inter untuk teks yang clean -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome untuk Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        aesthetic: {
+                            bg: '#F8FAFC',
+                            card: '#FFFFFF',
+                            text: '#0F172A',
+                            muted: '#475569',
+                            gold: '#C5A880', /* Champagne Gold */
+                            red: '#991B1B'    /* Deep Crimson Red */
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-out',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F1F5F9;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(210, 40%, 96%, 1) 0, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(30, 30%, 95%, 1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(350, 30%, 95%, 1) 0, transparent 50%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+        
+        .premium-card {
+            background: #FFFFFF;
+            box-shadow: 
+                0 4px 6px -1px rgba(0, 0, 0, 0.03), 
+                0 10px 15px -3px rgba(0, 0, 0, 0.05),
+                0 20px 25px -5px rgba(0, 0, 0, 0.02),
+                0 0 40px rgba(0, 0, 0, 0.02) inset;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #B38F56 0%, #D4AF37 50%, #AA7C11 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .border-elegant {
+            position: relative;
+        }
+        .border-elegant::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background-color: #C5A880;
+        }
+    </style>
+</head>
+<body class="text-aesthetic-text antialiased">
+
+    <!-- Canvas untuk efek Confetti warna soft gold/pearl -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Kontainer Utama Poster -->
+    <main class="w-full max-w-md premium-card rounded-[2.5rem] overflow-hidden relative transform transition-all duration-500 hover:shadow-3xl p-8 sm:p-10 animate-fade-in">
+        
+        <!-- Ornamen Minimalis Bingkai Dalam -->
+        <div class="absolute inset-4 border border-gray-100 rounded-[1.8rem] pointer-events-none"></div>
+
+        <!-- Watermark/Logo Minimalis di Atas -->
+        <div class="text-center mb-8 relative z-10">
+            <p class="text-[10px] tracking-[0.3em] text-aesthetic-muted uppercase font-bold">Official Invitation</p>
+            <div class="w-1.5 h-1.5 bg-aesthetic-gold rounded-full mx-auto mt-2"></div>
+        </div>
+
+        <!-- Header Section -->
+        <div class="text-center mb-8 relative z-10">
+            <span class="inline-block text-2xl mb-1 filter drop-shadow">✨</span>
+            <h1 class="font-serif italic text-3xl text-aesthetic-text leading-tight">
+                Congrats!
+            </h1>
+            <h2 class="text-xs uppercase tracking-[0.25em] font-extrabold text-aesthetic-red mt-1">
+                Kamu Terpilih
+            </h2>
+        </div>
+
+        <!-- Nama Penerima (Klik untuk Mengubah) -->
+        <div class="text-center mb-8 relative z-10 cursor-pointer group" onclick="ubahNama()" title="Klik untuk mengubah nama">
+            <p class="text-[10px] text-aesthetic-muted uppercase tracking-[0.2em] mb-1">Diberikan Kepada</p>
+            <div class="inline-block">
+                <h3 id="nama-peserta" class="text-3xl font-serif italic font-bold gold-gradient-text px-4 py-1 transition-all group-hover:scale-105 duration-300">
+                    KARIN
+                </h3>
+            </div>
+            <p class="text-[9px] text-gray-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity tracking-wider">✏️ Klik di sini untuk mengganti nama</p>
+        </div>
+
+        <!-- Divider Line -->
+        <div class="flex items-center justify-center space-x-3 mb-8">
+            <div class="w-12 h-[1px] bg-gray-200"></div>
+            <span class="text-xs text-aesthetic-gold"><i class="fa-solid fa-crown"></i></span>
+            <div class="w-12 h-[1px] bg-gray-200"></div>
+        </div>
+
+        <!-- Penawaran Utama -->
+        <div class="text-center mb-8 relative z-10">
+            <p class="text-xs uppercase tracking-[0.15em] text-aesthetic-muted">Nikmati Akses</p>
+            <h4 class="text-xl font-bold tracking-tight text-aesthetic-text mt-1">
+                LATIHAN GRATIS
+            </h4>
+            <p class="text-xs font-serif italic text-aesthetic-gold mt-0.5">di Sanekala Fighting Camp</p>
+        </div>
+
+        <!-- Info Jadwal / Box Elegan -->
+        <div class="bg-slate-50 border border-slate-100 rounded-2xl p-4 mb-8 text-center relative z-10">
+            <p class="text-[10px] uppercase tracking-[0.15em] text-aesthetic-muted mb-1">Ketentuan Slot</p>
+            <p class="text-lg font-bold text-aesthetic-text">1 Minggu = 1x Visit</p>
+            <p class="text-xs text-aesthetic-muted italic mt-0.5">(Satu Minggu Sekali)</p>
+        </div>
+
+        <!-- Alur Klaim (Langkah-Langkah) -->
+        <div class="mb-10 relative z-10">
+            <h5 class="text-center text-[10px] uppercase tracking-[0.2em] font-bold text-aesthetic-gold mb-6">
+                Cara Klaim Slot Gratis Anda
+            </h5>
+            <ul class="space-y-5 px-2">
+                <li class="flex items-start">
+                    <span class="font-serif italic text-xl text-aesthetic-gold leading-none mr-4 w-4 text-right">01</span>
+                    <p class="text-xs text-aesthetic-muted leading-relaxed">
+                        Datang langsung dan nikmati serunya sesi latihan Anda.
+                    </p>
+                </li>
+                <li class="flex items-start">
+                    <span class="font-serif italic text-xl text-aesthetic-gold leading-none mr-4 w-4 text-right">02</span>
+                    <p class="text-xs text-aesthetic-muted leading-relaxed">
+                        Abadikan foto atau video keseruan momen Anda di Sanekala.
+                    </p>
+                </li>
+                <li class="flex items-start">
+                    <span class="font-serif italic text-xl text-aesthetic-gold leading-none mr-4 w-4 text-right">03</span>
+                    <p class="text-xs text-aesthetic-muted leading-relaxed">
+                        Bagikan di status/story sosial media Anda <span class="text-[10px] text-gray-400 font-sans block mt-0.5">(Instagram, WhatsApp, atau TikTok)</span>.
+                    </p>
+                </li>
+                <li class="flex items-start">
+                    <span class="font-serif italic text-xl text-aesthetic-gold leading-none mr-4 w-4 text-right">04</span>
+                    <p class="text-xs text-aesthetic-muted leading-relaxed">
+                        Jangan lupa untuk tag akun <strong class="text-aesthetic-text font-semibold">@sanekalafightingcamp</strong>!
+                    </p>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Pesan Penutup Minimalis -->
+        <div class="text-center mb-4 relative z-10">
+            <p class="text-[10px] text-aesthetic-muted tracking-wider italic">
+                *Slot sangat terbatas untuk rekan terpilih. Sampai jumpa di camp!
+            </p>
+        </div>
+
+        <!-- Footer Branding -->
+        <div class="text-center pt-4 border-t border-gray-100 relative z-10">
+            <p class="font-sans font-bold tracking-[0.3em] text-[10px] text-aesthetic-text uppercase">
+                SANEKALA FIGHTING CAMP
+            </p>
+        </div>
+
+    </main>
+
+    <!-- Script JavaScript untuk Interaktivitas & Confetti Soft Champagne -->
+    <script>
+        // Fungsi untuk mengubah nama saat di-klik
+        function ubahNama() {
+            const namaEl = document.getElementById('nama-peserta');
+            let namaSaatIni = namaEl.innerText;
+            if(namaSaatIni === '[Nama Penerima]') namaSaatIni = '';
+            
+            const namaBaru = prompt("Masukkan nama peserta:", namaSaatIni);
+            
+            if (namaBaru && namaBaru.trim() !== '') {
+                namaEl.innerText = namaBaru.toUpperCase();
+                // Tembakkan konfeti elegan tiap nama diganti
+                fireConfetti();
+            }
+        }
+
+        // Ambil nama dari parameter URL (misal: ?nama=Budi) jika ada
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const namaParam = urlParams.get('nama');
+            if(namaParam) {
+                document.getElementById('nama-peserta').innerText = namaParam.toUpperCase();
+            }
+            // Mulai animasi konfeti champagne saat load
+            fireConfetti();
+        };
+
+        // --- SISTEM CONFETTI ELEGAN (CHAMPAGNE, GOLD & WHITE) ---
+        function fireConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            // Warna-warna estetis: Gold, Cream, Pearl White, Soft Crimson
+            const colors = ['#C5A880', '#E2D4C0', '#FFFFFF', '#991B1B', '#F1F5F9']; 
+
+            for (let i = 0; i < 70; i++) {
+                particles.push({
+                    x: canvas.width / 2,
+                    y: canvas.height / 2 + 50,
+                    r: Math.random() * 4 + 2,
+                    dx: Math.random() * 8 - 4,
+                    dy: Math.random() * -12 - 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    tilt: Math.floor(Math.random() * 10) - 5,
+                    tiltAngle: 0,
+                    tiltAngleInc: (Math.random() * 0.05) + 0.03
+                });
+            }
+
+            function animate() {
+                let isActive = false;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = 0; i < particles.length; i++) {
+                    let p = particles[i];
+                    p.tiltAngle += p.tiltAngleInc;
+                    p.dy += 0.15; // Soft gravity
+                    p.y += p.dy;
+                    p.x += p.dx;
+                    p.x += Math.sin(p.tiltAngle) * 0.5;
+
+                    if (p.y <= canvas.height && p.x >= 0 && p.x <= canvas.width) {
+                        isActive = true;
+                        ctx.beginPath();
+                        ctx.lineWidth = p.r;
+                        ctx.strokeStyle = p.color;
+                        ctx.moveTo(p.x + p.tilt + p.r, p.y);
+                        ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r);
+                        ctx.stroke();
+                    }
+                }
+
+                if (isActive) {
+                    requestAnimationFrame(animate);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+            animate();
+        }
+
+        // Resize canvas ketika ukuran window berubah
+        window.addEventListener('resize', function() {
+            const canvas = document.getElementById('confetti-canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
